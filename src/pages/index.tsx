@@ -11,7 +11,7 @@ const CreatePostWizard = () => {
   const { user } = useUser();
   if (!user) return null;
 
-  console.log(user)
+  // console.log(user)
 
   return (
     <div className="flex w-full gap-3">
@@ -53,7 +53,7 @@ const Home: NextPage = () => {
 
           </div>
           <div className="flex flex-col">
-            {[...data]?.map((post) => (<div className="border-b border-slate-500 p-4" key={post.id}>{post.content}</div>))}
+            {[...data]?.map(({post, author}) => (<div className="border-b border-slate-500 p-4" key={post.id}>{post.content}</div>))}
           </div>
         </div>
       </main>

@@ -4,8 +4,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 
-import { api } from "~/utils/api";
-
+import { RouterOutputs, api } from "~/utils/api";
 
 const CreatePostWizard = () => {
   const { user } = useUser();
@@ -26,9 +25,23 @@ const CreatePostWizard = () => {
   )
 }
 
+// RouterOutputs inference helper from api utils. 'posts' defined in
+type PostWithUser = RouterOutputs["posts"]["getAll"][number]
+const PostView = (props: PostWithUser) => {
+  const {post, author} = props;
+
+  return (
+    <div className="border-b border-slate-500 p-4" key={post.id}><img
+    src={author?.profileImageUrl}
+    alt="Profile Image"
+    className="w-14 h-14 rounded-full" />
+    {post.content}</div>
+  )
+}
+
 const Home: NextPage = () => {
 
-  const { data, isLoading } = api.post.getAll.useQuery();
+  const { data, isLoading } = api.posts.getAll.useQuery();
 
   if (isLoading) return <div>Loading...</div>
   if (!data) return <div>Something went wrong</div>
@@ -53,7 +66,9 @@ const Home: NextPage = () => {
 
           </div>
           <div className="flex flex-col">
-            {[...data]?.map(({post, author}) => (<div className="border-b border-slate-500 p-4" key={post.id}>{post.content}</div>))}
+            {[...data]?.map((fullPost) => (
+              <PostView {...fullPost}/>
+            ))}
           </div>
         </div>
       </main>

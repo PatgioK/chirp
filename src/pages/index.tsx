@@ -67,7 +67,7 @@ const Home: NextPage = () => {
           </div>
           <div className="flex flex-col">
             {[...data]?.map((fullPost) => (
-              <PostView {...fullPost}/>
+              <PostView {...fullPost} key={fullPost.post.id}/>
             ))}
           </div>
         </div>

@@ -8,6 +8,10 @@ import { api } from "~/utils/api";
 // import type interface to reduce code in final compiled output
 import type { RouterOutputs } from "~/utils/api";
 
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
+
 const CreatePostWizard = () => {
   const { user } = useUser();
   if (!user) return null;
@@ -39,9 +43,9 @@ const PostView = (props: PostWithUser) => {
         alt="Profile Image"
         className="w-14 h-14 rounded-full" />
       <div className="flex flex-col">
-        <div className="flex">
+        <div className="flex gap-1 text-slate-200">
           <span>{`@${author.username}`}</span>
-          <span>{` ·  1 hour ago`}</span>
+          <span>{` ·  ${dayjs(post.createdAt).fromNow()}`}</span>
         </div>
         <span>{post.content}</span>
       </div>

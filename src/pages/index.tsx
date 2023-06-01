@@ -41,7 +41,7 @@ const PostView = (props: PostWithUser) => {
       <div className="flex flex-col">
         <div className="flex">
           <span>{`@${author.username}`}</span>
-          <span>{` -  1 hour ago`}</span>
+          <span>{` ·  1 hour ago`}</span>
         </div>
         <span>{post.content}</span>
       </div>

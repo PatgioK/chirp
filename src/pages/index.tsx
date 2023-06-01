@@ -24,7 +24,10 @@ const CreatePostWizard = () => {
       <Image
         src={user?.profileImageUrl}
         alt="Profile Image"
-        className="w-14 h-14 rounded-full" />
+        className="w-14 h-14 rounded-full" 
+        width={56}
+        height={56}
+        />
       <input
         placeholder="Type your post!"
         className="bg-transparent grow outline-none" />
@@ -41,8 +44,11 @@ const PostView = (props: PostWithUser) => {
     <div className="flex border-b border-slate-500 p-4 gap-3" key={post.id}>
       <Image
         src={author?.profileImageUrl}
-        alt="Profile Image"
-        className="w-14 h-14 rounded-full" />
+        alt={`@${author.username}'s profile picture`}
+        className="w-14 h-14 rounded-full" 
+        width={56}
+        height={56}
+        />
       <div className="flex flex-col">
         <div className="flex gap-1 text-slate-200">
           <span>{`@${author.username}`}</span>
@@ -71,6 +77,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex justify-center h-screen">
+        <UserButton />
         <div className="border-x border-slate-500 h-full w-full md:max-w-2xl">
           <div className="flex justify-center border-b border-slate-500 p-4">
 

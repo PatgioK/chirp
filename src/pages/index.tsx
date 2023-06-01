@@ -74,7 +74,8 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex justify-center h-screen">
-        <UserButton />
+        <UserButton 
+        afterSignOutUrl="https://chirp-lime-beta.vercel.app/"/>
         <div className="border-x border-slate-500 h-full w-full md:max-w-2xl">
           <div className="flex justify-center border-b border-slate-500 p-4">
 

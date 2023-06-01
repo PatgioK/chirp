@@ -17,8 +17,6 @@ const CreatePostWizard = () => {
   const { user } = useUser();
   if (!user) return null;
 
-  // console.log(user)
-
   return (
     <div className="flex w-full gap-3">
       <Image
@@ -61,13 +59,12 @@ const PostView = (props: PostWithUser) => {
 }
 
 const Home: NextPage = () => {
-
   const { data, isLoading } = api.posts.getAll.useQuery();
+  const user = useUser();
 
   if (isLoading) return <div>Loading...</div>
   if (!data) return <div>Something went wrong</div>
 
-  const user = useUser();
 
   return (
     <>

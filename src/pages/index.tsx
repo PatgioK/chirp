@@ -4,7 +4,9 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 
-import { RouterOutputs, api } from "~/utils/api";
+import { api } from "~/utils/api";
+// import type interface to reduce code in final compiled output
+import type { RouterOutputs } from "~/utils/api";
 
 const CreatePostWizard = () => {
   const { user } = useUser();
@@ -28,14 +30,22 @@ const CreatePostWizard = () => {
 // RouterOutputs inference helper from api utils. 'posts' defined in
 type PostWithUser = RouterOutputs["posts"]["getAll"][number]
 const PostView = (props: PostWithUser) => {
-  const {post, author} = props;
+  const { post, author } = props;
 
   return (
-    <div className="border-b border-slate-500 p-4" key={post.id}><img
-    src={author?.profileImageUrl}
-    alt="Profile Image"
-    className="w-14 h-14 rounded-full" />
-    {post.content}</div>
+    <div className="flex border-b border-slate-500 p-4 gap-3" key={post.id}>
+      <img
+        src={author?.profileImageUrl}
+        alt="Profile Image"
+        className="w-14 h-14 rounded-full" />
+      <div className="flex flex-col">
+        <div className="flex">
+          <span>{`@${author.username}`}</span>
+          <span>{` -  1 hour ago`}</span>
+        </div>
+        <span>{post.content}</span>
+      </div>
+    </div>
   )
 }
 
@@ -57,7 +67,7 @@ const Home: NextPage = () => {
       </Head>
       <main className="flex justify-center h-screen">
         <div className="border-x border-slate-500 h-full w-full md:max-w-2xl">
-          <div className="flex justify-center border-b border-slate-500 pb-4">
+          <div className="flex justify-center border-b border-slate-500 p-4">
 
             {/* {!user.isSignedIn && <SignInButton />} */}
             {/* {!!user.isSignedIn && <SignOutButton />} */}
@@ -67,7 +77,7 @@ const Home: NextPage = () => {
           </div>
           <div className="flex flex-col">
             {[...data]?.map((fullPost) => (
-              <PostView {...fullPost} key={fullPost.post.id}/>
+              <PostView {...fullPost} key={fullPost.post.id} />
             ))}
           </div>
         </div>

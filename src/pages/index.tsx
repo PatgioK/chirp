@@ -11,6 +11,7 @@ import type { RouterOutputs } from "~/utils/api";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "next/image";
+import { LoadingPage } from "~/components/loading";
 dayjs.extend(relativeTime);
 
 const CreatePostWizard = () => {
@@ -22,10 +23,10 @@ const CreatePostWizard = () => {
       <Image
         src={user?.profileImageUrl}
         alt="Profile Image"
-        className="w-14 h-14 rounded-full" 
+        className="w-14 h-14 rounded-full"
         width={56}
         height={56}
-        />
+      />
       <input
         placeholder="Type your post!"
         className="bg-transparent grow outline-none" />
@@ -43,10 +44,10 @@ const PostView = (props: PostWithUser) => {
       <Image
         src={author?.profileImageUrl}
         alt={`@${author.username}'s profile picture`}
-        className="w-14 h-14 rounded-full" 
+        className="w-14 h-14 rounded-full"
         width={56}
         height={56}
-        />
+      />
       <div className="flex flex-col">
         <div className="flex gap-1 text-slate-200">
           <span>{`@${author.username}`}</span>
@@ -62,9 +63,10 @@ const Home: NextPage = () => {
   const { data, isLoading } = api.posts.getAll.useQuery();
   const user = useUser();
 
-  if (isLoading) return <div>Loading...</div>
-  if (!data) return <div>Something went wrong</div>
+  // if (isLoading) return <div className="spinner flex content-center justify-center"></div>
 
+  if (isLoading) return <LoadingPage />
+  if (!data) return <div>Something went wrong</div>
 
   return (
     <>
@@ -74,8 +76,16 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex justify-center h-screen">
-        <UserButton 
-        afterSignOutUrl="https://chirp-lime-beta.vercel.app/"/>
+
+        <div className="loader-container">
+          <div className="spinner"></div>
+        </div>
+        <div className="loader-container2">
+
+        <img src="/Logo.png" alt="logo" width={160} height={160}/>
+        </div>
+
+        <UserButton afterSignOutUrl="https://chirp-lime-beta.vercel.app/" />
         <div className="border-x border-slate-500 h-full w-full md:max-w-2xl">
           <div className="flex justify-center border-b border-slate-500 p-4">
 
